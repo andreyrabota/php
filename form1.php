@@ -27,6 +27,15 @@
 
 
 <?php
+function printResult ($res){
+	while(($row = $res->fetch_assoc()) !=FALSE) {
+		echo($row["username"]);
+		echo "<br />";
+	}
+	
+	
+}
+
 if (isset($_POST["accept"])) {
 	$username = $_POST["username"];
 	$password = $_POST["password"];
@@ -37,19 +46,20 @@ $mysqli = new mysqli("127.0.0.1:3306", "root", "", "project1"); //connection to 
 $mysqli->query ("SET NAMES 'utf-8'"); 
 $mysqli->query ("INSERT INTO `form1` (`username`, `password`, `email`, `phone`) 
 VALUES ('$username', '$password', '$email', '$phone')"); //otpravka formi v bazy
+$res = $mysqli->query("SELECT * FROM form1");
 $mysqli->close();  //zakritie soedinenia s bd
 
+?>
 
 
-$mysqli->query("SELECT * FROM form1");
 <table>
 <tr>
 <th>Username</th><th>Password</th><th>Email</th><th>Phone</th>
 </tr>
 <tr>
-<td></td><td></td><td></td><td></td><td></td>
+<td><?php printResult($res)?></td><td></td><td></td><td></td><td></td>
 </tr>
-?>
+</table>
 	</body>
 
 </html>
