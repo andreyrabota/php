@@ -30,6 +30,9 @@
 function printResult ($res){
 	while(($row = $res->fetch_assoc()) !=FALSE) {
 		echo($row["username"]);
+		echo($row["password"]);
+		echo($row["email"]);
+		echo($row["phone"]);
 		echo "<br />";
 	}
 	
