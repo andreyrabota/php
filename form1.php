@@ -27,17 +27,10 @@
 
 
 <?php
-function printResult ($res){
-	while(($row = $res->fetch_assoc()) !=FALSE) {
-		echo($row["username"]);
-		echo($row["password"]);
-		echo($row["email"]);
-		echo($row["phone"]);
-		echo "<br />";
-	}
 	
 	
-}
+	
+
 
 if (isset($_POST["accept"])) {
 	$username = $_POST["username"];
@@ -45,23 +38,23 @@ if (isset($_POST["accept"])) {
 	$email = $_POST["email"];
 	$phone = $_POST["phone"];
 }
-$mysqli = new mysqli("127.0.0.1:3306", "root", "", "project1"); //connection to bd
+$mysqli = new mysqli("127.0.0.1:3306", "root", "", "project1"); //connection to bd sozdaem object klassa mysqli kotoriy p
 $mysqli->query ("SET NAMES 'utf-8'"); 
 $mysqli->query ("INSERT INTO `form1` (`username`, `password`, `email`, `phone`) 
 VALUES ('$username', '$password', '$email', '$phone')"); //otpravka formi v bazy
-$res = $mysqli->query("SELECT * FROM form1");
+$res = $mysqli->query("SELECT * FROM form1"); //
 $mysqli->close();  //zakritie soedinenia s bd
-
+$result = $res->fetch_assoc();
 ?>
 
 
-<table>
+<table cellpadding="5" border="1">
 <tr>
 <th>Username</th><th>Password</th><th>Email</th><th>Phone</th>
 </tr>
 <tr>
-<td><?php printResult($res)?></td><td></td><td></td><td></td><td></td>
-</tr>
+<td><?php echo $result["username"];?></td><td><?php echo $result["password"];?></td><td><?php echo $result["email"];?></td><td><?php echo $result["phone"];?></td>
+<td><input type="submit" name="delete" value="delete"/></td><td><input type="submit" name="modify" value="modify"/></td>
 </table>
 	</body>
 
